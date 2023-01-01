@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Antrean Websocket Node js</title>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/print.css">
+	<script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript" src="assets/js/main.js"></script>
+	<style type="text/css">
+		body {
+			margin-top: 30px;
+		}
+
+		@media print {
+			#section-print {
+				display: block;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card text-center">
+					<div class="card-header">
+						<label style="font-size: 20pt;"><button class="btn btn-link" id="try" style="font-size: larger;">LOKET 2</button></label>
+					</div>
+					<div class="card-body">
+						<h5 class="card-title">NOMOR ANTREAN</h5>
+						<p class="card-text" style="font-size: 60px" id="nm_dilayani">A-0</p>
+						<p id="kode" style="display: none;"></p>
+						<h6 class="card-title">SISA <label id="sisa_antrian" style="font-weight: bold;"></label>
+							<script>
+								var date= new Date();
+								var get_date = date.getFullYear() + "-" + ("0" + (date.getMonth()+1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2);
+								setInterval(function() {
+									$.get( "/api/antrean/sisa/"+get_date+"")
+									.done(function( data ) {
+										if (data['success']==1) 
+										{
+											document.getElementById("sisa_antrian").innerHTML = data['data'][0]['sisa_antrean'];
+										}
+									});
+								}, 1000);
+							</script>
+						</h6>
+						<h6><label id="kondisi" style="font-weight: bold;"></label>
+							<script>
+								var pathname = new URL(window.location.href).pathname;
+								var loket=pathname.slice(8);
+								var date= new Date();
+								var get_date = date.getFullYear() + "-" + ("0" + (date.getMonth()+1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2);
+								setInterval(function() {
+									$.get( "/api/antrean/mulai/"+loket+"/"+get_date)
+									.done(function( data ) {
+										if (data['success']==1) 
+										{
+											document.getElementById("kondisi").innerHTML = "Sedang Melayani";
+										}
+										else
+										{
+											document.getElementById("kondisi").innerHTML = "Tidak Melayani";
+										}
+									});
+								}, 1000);
+							</script></h6>
+						<center>
+							<table>
+								<tr>
+									<td>
+										<button type="button" class="btn btn-primary"
+										id="start"><b><u>S</u></b>elanjutnya</button>
+									</td>
+									<td>
+										<button type="button" class="btn btn-primary"
+										id="call" style="display: none;"><b><u>P</u></b>anggil</button>
+									</td>
+									<td>
+										<button type="button" class="btn btn-primary"
+										id="btl" style="display: none;"><b><u>B</u></b>atal</button>
+									</td>
+									<td>
+										<button type="button" class="btn btn-primary"
+										id="retry" style="display: none;"><b><u>U</u></b>lang</button>
+									</td>
+									<td>
+										<button type="button" class="btn btn-primary" id="next" style="display: none;">
+										<b><u>S</u></b>elanjutnya</button>
+									</td>
+								</tr>
+							</table>
+						</center>
+					</div>
+					<div class="card-footer text-muted">
+						Halaman ini digunakan untuk petugas pemanggil
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--row-->
+	</div>
+	<!--  -->
+	<script type="text/javascript">
+
+	
+		// Kombinasi
+		//(e.metaKey || e.altKey) && ( String.fromCharCode(e.which).toLowerCase() === 'p')
+
+		// $(document).on('keydown', function (e) {
+		// 	if ((String.fromCharCode(e.which).toLowerCase() === 'p')) {
+		// 		$('#call').click();
+		// 	} else if ((String.fromCharCode(e.which).toLowerCase() === 's')) {
+		// 		$('#next').click();
+		// 	}else if ((String.fromCharCode(e.which).toLowerCase() === 'u')) {
+		// 		$('#retry').click();
+		// 	}else if ((String.fromCharCode(e.which).toLowerCase() === 'm')) {
+		// 		$('#start').click();
+		// 	}
+		// });
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Antrean Websocket Node js</title>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="assets/js/main-farmasi.js"></script>
+	
+	<style type="text/css">
+		body{
+			margin-top: 30px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card text-center">
+				  <div class="card-header">
+				    DAFTAR PASIEN RESEP OBAT
+				  </div>
+				  <div class="card-body">
+					<div class="table-responsive">
+						<table name="mytab" class="table">
+							<thead>
+								<tr> 
+									<td>No Resep</td>
+									<td>No.Rekam Medis</td>
+									<td>Nama Pasien</td>
+									<td>Poli</td>
+									<td>Aksi</td>
+								</tr>
+							</thead>
+							<tbody id="mytab1">
+								<script>
+									var date= new Date();
+									var get_date = date.getFullYear() + "-" + ("0" + (date.getMonth()+1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2);
+									const table = document.getElementById("mytab1");
+									setInterval(function() {
+										$.ajax("/api/antrean-farmasi/farmasi/"+get_date, {
+											type: 'GET',  // http method
+											beforeSend: function() {
+												table.innerHTML = `<td colspan='7'>Memuat Data...</td>`;   
+											},
+											success: function (data, status, xhr) {
+												if (data['success']==1) 
+												{
+													// console.log('ok');
+													var parent ='';
+													data['data'].forEach((element) => {
+														parent+= '<tr>';
+														parent+= '<td>' + element.no_resep + '</td>';
+														parent+= '<td>' + element.no_rkm_medis + '</td>';
+														parent+= '<td>' + element.nm_pasien + '</td>';
+														parent+= '<td>' + element.nm_poli_bpjs + '</td>';
+														parent+= `<td><button id='panggil' data-poli='`+element.nm_poli_bpjs+`' data-pasien='`+element.nm_pasien+`'>Panggil</button></td>`;
+														parent+= '</tr>';
+														
+													});
+													table.innerHTML = parent
+												}
+												else
+												{
+													table.innerHTML = `<td colspan='7'>Data Kosong...!!!</td>`;
+												}
+											},
+											error: function (jqXhr, textStatus, errorMessage) {
+												table.append('Error' + errorMessage);
+											}
+										});
+
+										
+									}, 5000);
+								</script>
+							</tbody>
+						</table>
+					</div>
+				  </div>
+				  <div class="card-footer text-muted">
+				    Versi 0.1
+				  </div>
+				</div>
+			</div>
+		</div> <!--row-->
+	</div>
+</body>
+</html>

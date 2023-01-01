@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Antrean Websocket Node js</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/font-awesome/css/font-awesome.css">
+	<script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="assets/js/main-poli.js"></script>
+	<style type="text/css">
+		body{
+			margin-top: 30px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="col-md-12">
+			<div class="card text-center">
+				<div class="card-header">
+				PILIH POLI
+				</div>
+				<div class="card-body">
+				<table class="table">
+					<tr>
+						<td>
+							<select name="" id="poli" class="form-control">
+								<option value="">- Pilih Poli</option>
+								<script>
+									setTimeout(function() {
+										$.get( "/api/antrean-poli/poli/")
+										.done(function( data ) {
+											if (data['success']==1) 
+											{
+												const sb = document.querySelector('#poli');
+												for (let index = 0; index < data['data'].length; index++) {
+													const option = new Option(data['data'][index]['nm_poli'],data['data'][index]['kd_poli']);        
+													sb.add(option, undefined);
+
+												}
+											}
+										});
+									}, 3000);
+								</script>
+							</select>
+						</td>
+						<td> 
+							<select name="" id="dokter" class="form-control">
+							</select>
+						</td>
+						<td> 
+							<!-- <select name="" id="jam_praktek" class="form-control">
+							</select> -->
+						</td>
+						<td>
+							<button class="btn btn-primary btn-md btn-block" id="akses">Akses</button>
+						</td>
+					</tr>
+				</table>
+				</div>
+				<div class="card-footer text-muted">
+				Versi 0.1
+				</div> 
+			</div>
+		</div>
+		</br>
+		<div class="col-md-12">
+			<div class="card text-center">
+				<div class="card-header">
+				DAFTAR PASIEN
+				</div>
+				<div class="card-body">
+				<div class="table-responsive">
+					<table name="mytab" class="table table-bordered table-dark">
+						<thead>
+							<tr> 
+								<td>No.Reg</td>
+								<td>No.Rekam Medis</td>
+								<td>Nama Pasien</td>
+								<td>Poli</td>
+								<td>Aksi</td>
+							</tr>
+						</thead>
+						<tbody id="mytab1">
+							<tr>
+								<td colspan="7">Pilih Poli & Dokter...!!!</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				</div>
+				<div class="card-footer text-muted">
+				Versi 0.1
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- The Modal -->
+	<div class="modal fade" id="modalku">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+
+				<!-- Ini adalah Bagian Header Modal -->
+				<div class="modal-header">
+					<h4 class="modal-title">Pemeriksaan Ralan : <label for="" id="no_rawat"></label></h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Ini adalah Bagian Body Modal -->
+				<div class="modal-body">
+					
+					<div>
+						<label for=""><b>S</b>ubyektif</label>
+						<textarea name="" id="subyektif" cols="30" rows="4" class="form-control" placeholder="...">-</textarea>
+					</div>
+					<div>
+						<label for=""><b>O</b>byektif</label>
+						<textarea name="" id="obyektif" cols="30" rows="4" class="form-control" placeholder="...">-</textarea>
+					</div>
+					<div>
+						<label for=""><b>A</b>ssesment</label>
+						<textarea name="" id="assesment" cols="30" rows="4" class="form-control" placeholder="...">-</textarea>
+					</div>
+					<div>
+						<label for=""><b>P</b>lan</label>
+						<textarea name="" id="plan" cols="30" rows="4" class="form-control" placeholder="...">-</textarea>
+					</div>
+				</div>
+
+				<!-- Ini adalah Bagian Footer Modal -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+					<button type="button" class="btn btn-primary" id="simpanSoap">Simpan</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!--  -->
+</body>
+</html>

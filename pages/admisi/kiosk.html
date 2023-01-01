@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Antrean Websocket Node js</title>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/print.css">
+	<script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript" src="assets/js/main.js"></script>
+	<style type="text/css">
+		body{
+			margin-top: 30px;
+		}
+		@media print{
+			#section-print{
+				display: block;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card text-center">
+				  <div class="card-header">
+				    <label style="font-size: 25pt;font-weight: bold;"> ANTRIAN LOKET PENDAFTARAN</label>
+				  </div>
+				  <div class="card-body">
+					<img id="ambil-antrean" src="assets/img/klik-disini2.gif" alt="">
+				  </div>
+				  <div class="card-footer text-muted">
+				    Halaman ini digunakan untuk mengambil nomor antrean pada unit admisi /pendaftaran
+				  </div>
+				</div>
+			</div>
+			<div id="section-to-print" style="display: none">
+		        <table style="width:8cm; text-align:center; font-family: Arial;" border="0" cellpadding="0" cellspacing="0">
+		            <tbody><tr>
+		                <td colspan="3" style="font-size:16px;font-weight:bold">FASKES TINGKAT LANJUT</td>
+		            </tr>
+		            <tr>
+		                <td colspan="3" style="font-size:14px;font-weight:bold">
+		                    <font id="txtKantor">RATIH (JST)</font>
+		                </td>
+		            </tr>
+		            <!-- ngIf: ispeserta == 0 || ispeserta == 1 -->
+		            <tr>
+		                <td colspan="3" style="font-size:12px;padding-bottom:5px">
+		                    <font id="txtTanggal"></font>
+		                </td>
+		            </tr>
+		            <tr>
+		                <td width="20%">&nbsp;</td>
+		                <td style="font-size:70px;font-weight:bold; border-top:1px solid">
+		                    <font id="txtTiketantrian"></font>
+		                    <font id="tes"></font>
+		                </td>
+		                <td width="20%">&nbsp;</td>
+		            </tr>
+		            <tr>
+		                <td width="20%">&nbsp;</td>
+		                <td style="font-size:14px; font-weight:bold;">
+		                    <font id="txtNamalayanan">ADMISI</font>
+		                </td>
+		                <td width="20%">&nbsp;</td>
+		            </tr>
+		            <!-- <tr>
+		                <td colspan="3" style="font-size:14px;font-weight:bold;padding-top:5px">Sisa antrean : <font id="txtSisaantrian">0</font>
+		                </td>
+		            </tr> -->
+		            <tr>
+		                <td colspan="3" style="font-size:12px;">&nbsp;</td>
+		            </tr>
+		            <tr>
+		                <td colspan="3" style="font-style:italic; font-size:10px;">*) Silakan mengambil nomor antrean
+		                    baru,<br>jika nomor antrean terlewatkan.</td>
+		            </tr>
+		        </tbody></table>
+		    </div>
+		</div> <!--row-->
+	</div>
+	<!--  -->
+	<script type="text/javascript">
+	
+		//AMBIL ANTREAN
+		$("#ambil-antrean").click(function(){
+
+			var date= new Date();
+			var get_date = date.getFullYear() + "-" + ("0" + (date.getMonth()+1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2);
+			var get_time = ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2) + ":" + ("0" + date.getSeconds()).slice(-2);
+
+			$.get( "/api/antrean/sisa/"+get_date)
+			.done(function( data ) {
+				if (data['success']==1) 
+				{
+					const noantrean = Number(data['data'][0]['noantrian'])+1;
+					const myArr = `{
+						"kd":"", 
+						"type":"Loket", 
+						"noantrian":"`+noantrean+`",
+						"no_rkm_medis":"", 
+						"postdate":"`+get_date+`", 
+						"start_time":"`+get_time+`",
+						"end_time":"", 
+						"status":"0", 
+						"loket":"0"
+					}`;
+					document.getElementById("txtTanggal").innerHTML = get_date+' '+get_time;
+					document.getElementById("txtTiketantrian").innerHTML = "A-"+noantrean;
+					$.ajax({
+					  type: "POST",
+					  url: "/api/antrean/ambil",
+					  data: myArr,
+					  contentType:"application/json",
+					  success: function(response){
+					  	var printContent = document.getElementById('section-to-print').innerHTML;
+					  	var originalContent = document.body.innerHTML;
+					  	document.body.innerHTML = printContent;
+					  	window.print();
+					  	document.body.innerHTML = originalContent;
+					  	window.location.replace("/kiosk-admisi");
+					  }
+					});
+				}
+
+			  });				
+		});
+	</script>
+</body>
+</html>

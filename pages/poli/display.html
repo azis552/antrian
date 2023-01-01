@@ -1,0 +1,640 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <title>Layar Informasi</title>
+
+    <!-- Meta START -->
+    <!-- <link rel="icon" href="assets/img/rs.png" type="image/x-icon"> -->
+
+    <!-- <meta http-equiv="refresh" content="10" /> -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link type="text/css" rel="stylesheet" href="assets/css/materialize.min.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="assets/css/jquery-ui.css" media="screen,projection" />
+    <link rel="stylesheet" href="assets/css/ok.css" />
+    <link rel="stylesheet" href="assets/css/slide.css" />
+    <style type="text/css">
+    .bg::before {
+        content: '';
+        /* background-image: url('assets/img/background.jpg'); */
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: scroll;
+        position: fixed;
+        z-index: -1;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        opacity: 0.10;
+        filter: alpha(opacity=10);
+    }
+    </style>
+    <!-- Javascript START -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.js"></script>
+    <!-- <script type="text/javascript" src="assets/js/jquery-2.1.1.min.js"></script> -->
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="assets/js/materialize.min.js"></script>
+    <!-- <script type="text/javascript" src="assets/js/jquery-ui.min.js"></script> -->
+    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+    <script data-pace-options='{ "ajax": false }' src='assets/js/pace.min.js'></script>
+    <!-- <script type="text/javascript" src="assets/js/jquery.min.js"></script> -->
+    <!-- <script type="text/javascript" src="assets/js/marquee.js"></script> -->
+    <style>
+    #customers {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    #customers td,
+    #customers th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #customers tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #customers tr:hover {
+        background-color: #ddd;
+    }
+
+    #customers th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #4CAF50;
+        color: white;
+    }
+    </style>
+    <style type="text/css">
+    table {
+        font-family: verdana, arial, sans-serif;
+        font-size: 15px;
+        color: #333333;
+        border-width: 1px;
+        border-color: #3A3A3A;
+        border-collapse: collapse;
+    }
+
+    table th {
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #FFA6A6;
+        background-color: #D56A6A;
+        color: #ffffff;
+    }
+
+    table tr:hover td {
+        cursor: pointer;
+    }
+
+    table tr:nth-child(even) td {
+        background-color: #F7CFCF;
+    }
+
+    table td {
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #FFA6A6;
+        background-color: #ffffff;
+    }
+
+
+    #blink {
+        text-align: center;
+        background: smoth Green;
+        color: #F00;
+        margin: 20px auto;
+        /* padding: 5px; */
+        border: 1px solid green;
+        /* width: 400px; */
+        box-shadow: 5px 10px 5px #00c;
+        border-radius: 15px 0;
+    }
+
+    #blink span {
+        font-size: 5em;
+        font-weight: bold;
+        display: block;
+        font-family: arial;
+    }
+    </style>
+    <!-- Global style END -->
+
+    </head>
+
+    <!-- Body START -->
+
+    <body class="bg">
+<div id="sound">
+            <audio id="suarabel" src="./assets/audio/lainnya/dingdong.wav"></audio>
+            <audio id="suaranomorantrian" src="./assets/audio/lainnya/nomorantrian.wav"></audio>
+            <audio id="suarapoli" src="./assets/audio/lainnya/poli.wav"></audio>
+            <audio id="suaraOBG" src="./assets/audio/poli/OBG.wav"></audio>
+            <audio id="suaraANA" src="./assets/audio/poli/ANA.wav"></audio>
+            <audio id="suaraINT" src="./assets/audio/poli/INT.wav"></audio>
+            <audio id="suaraBED" src="./assets/audio/poli/BED.wav"></audio>
+            <audio id="suaraMAT" src="./assets/audio/poli/MAT.wav"></audio>
+            <audio id="suaraJAN" src="./assets/audio/poli/JAN.wav"></audio>
+            <audio id="belas" src="./assets/audio/pecahan/belas.wav"></audio>
+            <audio id="puluh" src="./assets/audio/pecahan/puluh.wav"></audio>
+            <audio id="ratus" src="./assets/audio/pecahan/ratus.wav"></audio>
+            <audio id="seratus" src="./assets/audio/pecahan/seratus.wav"></audio>
+            <audio id="suara0" src="./assets/audio/angka/0.wav"></audio>
+            <audio id="suara1" src="./assets/audio/angka/1.wav"></audio>
+            <audio id="sebelas" src="./assets/audio/angka/11.wav"></audio>
+            <audio id="sepuluh" src="./assets/audio/angka/10.wav"></audio>
+            <audio id="suara2" src="./assets/audio/angka/2.wav"></audio>
+            <audio id="suara3" src="./assets/audio/angka/3.wav"></audio>
+            <audio id="suara4" src="./assets/audio/angka/4.wav"></audio>
+            <audio id="suara5" src="./assets/audio/angka/5.wav"></audio>
+            <audio id="suara6" src="./assets/audio/angka/6.wav"></audio>
+            <audio id="suara7" src="./assets/audio/angka/7.wav"></audio>
+            <audio id="suara8" src="./assets/audio/angka/8.wav"></audio>
+            <audio id="suara9" src="./assets/audio/angka/9.wav"></audio>
+            <audio id="suara12" src="./assets/audio/angka/12.wav"></audio>
+            <audio id="suara13" src="./assets/audio/angka/13.wav"></audio>
+            <audio id="suara14" src="./assets/audio/angka/14.wav"></audio>
+            <audio id="suara15" src="./assets/audio/angka/15.wav"></audio>
+            <audio id="suara16" src="./assets/audio/angka/16.wav"></audio>
+            <audio id="suara17" src="./assets/audio/angka/17.wav"></audio>
+            <audio id="suara18" src="./assets/audio/angka/18.wav"></audio>
+            <audio id="suara19" src="./assets/audio/angka/19.wav"></audio>
+    
+    
+        </div> 
+    <!-- Header START -->
+    <header>
+
+    <nav class="orange lighten-2">
+        <div class="nav-wrapper">
+        <ul class="center hide-on-med-and-down" id="nv">
+            <li>
+            <a href="./" class="ams hide-on-med-and-down"> <b>INFORMASI ANTRIAN POLIKLINIK</b> </a>
+            </li>
+        </ul>
+        </div>
+    </nav>
+
+
+
+
+    </header>
+    <!-- Header END -->
+
+    <!-- Main START -->
+    <main>
+
+
+    <!-- container END -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col s5">
+                <div class="col s12">
+                    <tr>
+                    <td>
+                        <div id="blink">
+    
+                        <span id="notif">
+                            BELUM ADA
+                        </span>
+                        </div>
+    
+                    </td>
+                    </tr>
+                    <tr bgcolor='#EE6868'>
+                    <td>
+                        <div id="blink" style="min-height: 100px;">
+                        <span style="font-size: 5em;">
+                            NOMOR ANTRIAN
+                        </span>
+                        <span style="font-size:225px" id="nmr_antrian">
+                            000
+                        </span>
+                        </div>
+    
+                    </td>
+                    </tr>
+                </div> 
+            </div>
+            <div class="col s7">
+                <div class="col s12">
+                    <tr>
+                    <td>
+                        <div id="blink">
+    
+                        <span id="nm_dokter">
+                            <!-- dr.BRAM MUSTIKO UTOMO -->
+                            dr.-
+                        </span>
+                        </div>
+    
+                    </td>
+                    </tr>
+                    <tr bgcolor='#EE6868'>
+                    <td>
+                        <div id="blink" style="min-height: 450px;">
+                        <span style="font-size: 7em;margin-top: 20pt;">
+                            POLIKLINIK
+                        </span>
+                        <span style="font-size:110px;" id="nm_poli">
+                            -
+                        </span>
+                        </div>
+    
+                    </td>
+                    </tr>
+                </div> 
+            </div>
+            <marquee direction = "left" behavior="scroll" scrollamount= "5" id="jalan">
+                <script>
+                    const child = document.getElementById("jalan");
+                    setTimeout(function() {
+                        $.get( "/api/antrean-poli/layan")
+                        .done(function( data ) {
+                            if (data['success']==1) 
+                            {
+                                var parent ='';
+                                data['data'].forEach((element) => {
+                                    parent+= `<div class="col s4">
+                                                <tr bgcolor='#EE6868'>
+                                                <td>
+                                                    <div id="blink" style="min-height: 277px;">
+                                                    <span style="font-size:25px">
+                                                        `+ element.nm_dokter +`
+                                                    </span>
+                                                    <hr>
+                                                    <span style="font-size:25px">
+                                                        ANTRIAN
+                                                    </span>
+                                                    <span style="font-size:100px">
+                                                        `+ element.nmr_antian +`
+                                                    </span>
+                                                    </div>
+                                
+                                                </td>
+                                                </tr>
+                                            </div>`;
+                                    
+                                });
+                                child.innerHTML = parent    
+                            }
+                        });
+                    }, 3000);
+                </script>
+            </marquee>
+        </div>
+    </div>
+    </main>
+
+    <!-- Main END -->
+
+    <!-- Include Footer START -->
+
+    <!-- Footer START -->
+
+    <footer class="page-footer">
+    <div class="footer-copyright orange lighten-1">
+        &nbsp Copyright © RSU RATIH KOTA KEDIRI | Jl. Penanggungan, Bandar Lor, Kec. Mojoroto, Kota Kediri, Jawa Timur 64114
+    </div>
+
+
+    </footer>
+    <!-- Footer END -->
+    
+    <script type="text/javascript">
+        $(document).ready(function() {
+            blinkFont();
+        });
+
+        function blinkFont() {
+            document.getElementById("blink").style.color = "red"
+            document.getElementById("blink").style.background = "white"
+            setTimeout("setblinkFont()", 500)
+        }
+
+        function setblinkFont() {
+            document.getElementById("blink").style.color = "white"
+            document.getElementById("blink").style.background = "green"
+            setTimeout("blinkFont()", 500)
+        }
+    </script>
+
+    <script type="text/javascript">
+        $(function(){
+            const child = document.getElementById("jalan");
+            var socket = io.connect();
+            socket.on('ulang-poli', function(data){
+                if (data.layanan=='poli') {
+                    var nomor = String(data.nomor);
+                    if (nomor.length<3 && nomor.length>0 && nomor.length<2) {
+                        document.querySelector('#nmr_antrian').innerHTML = '00'+data.nomor;
+                    } else if(nomor.length<3 && nomor.length>1) {
+                        document.querySelector('#nmr_antrian').innerHTML = '0'+data.nomor;
+                    }else{
+                        document.querySelector('#nmr_antrian').innerHTML = data.nomor;
+                    }
+                    document.querySelector('#notif').innerHTML = 'PANGGIL';
+                    document.querySelector('#nm_poli').innerHTML = data.nm_depo;
+                    document.querySelector('#nm_dokter').innerHTML = data.nm_dokter;
+                    // ========
+                    
+                    setTimeout(function() {
+                        $.get( "/api/antrean-poli/layan")
+                        .done(function( data ) {
+                            if (data['success']==1) 
+                            {
+                                var parent ='';
+                                data['data'].forEach((element) => {
+                                    parent+= `<div class="col s4">
+                                                <tr bgcolor='#EE6868'>
+                                                <td>
+                                                    <div id="blink" style="min-height: 277px;">
+                                                    <span style="font-size:25px">
+                                                        `+ element.nm_dokter +`
+                                                    </span>
+                                                    <hr>
+                                                    <span style="font-size:25px">
+                                                        ANTRIAN
+                                                    </span>
+                                                    <span style="font-size:100px">
+                                                        `+ element.nmr_antian +`
+                                                    </span>
+                                                    </div>
+                                
+                                                </td>
+                                                </tr>
+                                            </div>`;
+                                    
+                                });
+                                child.innerHTML = parent    
+                            }
+                        });
+                    }, 3000);
+                } else {
+                    
+                }
+            })
+
+        })
+    </script>
+
+<script type="text/javascript">
+  		$(function(){
+  			var socket = io.connect();
+
+			socket.on('ulang-poli', function(data){
+
+				//MAINKAN SUARA BEL PADA SAAT AWAL
+				document.getElementById('suarabel').pause();
+				document.getElementById('suarabel').currentTime=0;
+				document.getElementById('suarabel').play();
+
+				//SET DELAY UNTUK MEMAINKAN REKAMAN NOMOR URUT		
+				totalwaktu=document.getElementById('suarabel').duration*1000;
+
+				//MAINKAN SUARA NOMOR ANTRIAN		
+				setTimeout(function() {
+						document.getElementById('suaranomorantrian').pause();
+						document.getElementById('suaranomorantrian').currentTime=0;
+						document.getElementById('suaranomorantrian').play();
+				}, totalwaktu);
+				totalwaktu=totalwaktu+1000;
+
+				if(data.nomor<10){
+				//JIKA KURANG DARI 10
+					setTimeout(function() {
+					document.getElementById('suara'+data.nomor).pause();
+					document.getElementById('suara'+data.nomor).currentTime=0;
+					document.getElementById('suara'+data.nomor).play();
+					}, totalwaktu);
+					totalwaktu=totalwaktu+1000;
+				}else if(data.nomor==10){
+				//JIKA 10
+					setTimeout(function() {
+					document.getElementById('sepuluh').pause();
+					document.getElementById('sepuluh').currentTime=0;
+					document.getElementById('sepuluh').play();
+					}, totalwaktu);
+					totalwaktu=totalwaktu+1000;
+				}else if(data.nomor==11){
+				//JIKA 11
+					setTimeout(function() {
+					document.getElementById('sebelas').pause();
+					document.getElementById('sebelas').currentTime=0;
+					document.getElementById('sebelas').play();
+					}, totalwaktu);
+					totalwaktu=totalwaktu+1000;
+				}else if(data.nomor < 20){
+					//JIKA 12-19 MAKA MAIKAN SUARA ANGKA+"BELAS"
+					var pecah = data.nomor - 10;
+					setTimeout(function() {
+							document.getElementById('suara'+pecah).pause();
+							document.getElementById('suara'+pecah).currentTime=0;
+							document.getElementById('suara'+pecah).play();
+						}, totalwaktu);
+					totalwaktu=totalwaktu+500;
+					setTimeout(function() {
+							document.getElementById('belas').pause();
+							document.getElementById('belas').currentTime=0;
+							document.getElementById('belas').play();
+						}, totalwaktu);
+					totalwaktu=totalwaktu+780;
+				}else if(data.nomor <= 99){
+					var pecah = Math.floor(data.nomor / 10);
+			      	var puluh = data.nomor - (pecah * 10);
+			      	if (puluh==0) {
+			      	//JIKA PULUH = 0 MAKA MAINKAN SUARA ANGKA+PULUH
+			      		setTimeout(function() {
+								document.getElementById('suara'+pecah).pause();
+								document.getElementById('suara'+pecah).currentTime=0;
+								document.getElementById('suara'+pecah).play();
+							}, totalwaktu);
+						totalwaktu=totalwaktu+780;
+						setTimeout(function() {
+								document.getElementById('puluh').pause();
+								document.getElementById('puluh').currentTime=0;
+								document.getElementById('puluh').play();
+							}, totalwaktu);
+						totalwaktu=totalwaktu+500;	
+			      	} else {
+			      	//JIKA PULUH != 0 MAKA MAINKAN SUARA ANGKA+PULUH+AKNGKA
+			      		setTimeout(function() {
+								document.getElementById('suara'+pecah).pause();
+								document.getElementById('suara'+pecah).currentTime=0;
+								document.getElementById('suara'+pecah).play();
+							}, totalwaktu);
+						totalwaktu=totalwaktu+780;
+						setTimeout(function() {
+								document.getElementById('puluh').pause();
+								document.getElementById('puluh').currentTime=0;
+								document.getElementById('puluh').play();
+							}, totalwaktu);
+						totalwaktu=totalwaktu+500;
+						setTimeout(function() {
+								document.getElementById('suara'+puluh).pause();
+								document.getElementById('suara'+puluh).currentTime=0;
+								document.getElementById('suara'+puluh).play();
+							}, totalwaktu);
+						totalwaktu=totalwaktu+780;
+			      	}
+				}else if(data.nomor==100){
+				//JIKA 100 MAINKAN ANGKA SERATUS
+					setTimeout(function() {
+					document.getElementById('seratus').pause();
+					document.getElementById('seratus').currentTime=0;
+					document.getElementById('seratus').play();
+					}, totalwaktu);
+					totalwaktu=totalwaktu+1000;
+				}else if(data.nomor < 110){
+				//JIKA 101-109 MAKA MAINKAN SUARA SERATUS+ANGKA
+					var pecah = Math.floor(data.nomor / 100);
+					var puluh = data.nomor - (pecah * 100);
+		      		setTimeout(function() {
+							document.getElementById('seratus').pause();
+							document.getElementById('seratus').currentTime=0;
+							document.getElementById('seratus').play();
+						}, totalwaktu);
+					totalwaktu=totalwaktu+500;
+					setTimeout(function() {
+							document.getElementById('suara'+puluh).pause();
+							document.getElementById('suara'+puluh).currentTime=0;
+							document.getElementById('suara'+puluh).play();
+						}, totalwaktu);
+					totalwaktu=totalwaktu+500;
+				}else if(data.nomor==110){
+					//JIKA 110 MAINKAN SERATUS+SEPULUH
+					setTimeout(function() {
+							document.getElementById('seratus').pause();
+							document.getElementById('seratus').currentTime=0;
+							document.getElementById('seratus').play();
+						}, totalwaktu);
+					totalwaktu=totalwaktu+500;
+					setTimeout(function() {
+							document.getElementById('sepuluh').pause();
+							document.getElementById('sepuluh').currentTime=0;
+							document.getElementById('sepuluh').play();
+						}, totalwaktu);
+					totalwaktu=totalwaktu+500;
+				}else if(data.nomor==111){
+					//JIKA 111 MAINKAN SERATUS+SEBELAS
+					setTimeout(function() {
+							document.getElementById('seratus').pause();
+							document.getElementById('seratus').currentTime=0;
+							document.getElementById('seratus').play();
+						}, totalwaktu);
+					totalwaktu=totalwaktu+500;
+					setTimeout(function() {
+							document.getElementById('sebelas').pause();
+							document.getElementById('sebelas').currentTime=0;
+							document.getElementById('sebelas').play();
+						}, totalwaktu);
+					totalwaktu=totalwaktu+500;
+				}else if(data.nomor < 120){
+				//JIKA 112-119 MAKA MAIKAN SUARA SERATUS+ANGKA
+					var pecah = Math.floor(data.nomor / 100);
+					var puluh = data.nomor - (pecah * 100);
+					setTimeout(function() {
+							document.getElementById('seratus').pause();
+							document.getElementById('seratus').currentTime=0;
+							document.getElementById('seratus').play();
+						}, totalwaktu);
+					totalwaktu=totalwaktu+780;
+					setTimeout(function() {
+							document.getElementById('suara'+puluh).pause();
+							document.getElementById('suara'+puluh).currentTime=0;
+							document.getElementById('suara'+puluh).play();
+						}, totalwaktu);
+					totalwaktu=totalwaktu+500;
+				}else if(data.nomor <= 199){ 
+					var pecah = Math.floor(data.nomor / 100);
+					var puluh = data.nomor - (pecah * 100);
+					let str = String(puluh);
+					const myArr = str.split("");
+					if (myArr[1]==0) {
+					//JIKA ARRAY KE 1=0 MAINKAN SERATUS+ANGKA+PULUH
+						setTimeout(function() {
+							document.getElementById('seratus').pause();
+							document.getElementById('seratus').currentTime=0;
+							document.getElementById('seratus').play();
+						}, totalwaktu);
+						totalwaktu=totalwaktu+780;
+						setTimeout(function() {
+								document.getElementById('suara'+myArr[0]).pause();
+								document.getElementById('suara'+myArr[0]).currentTime=0;
+								document.getElementById('suara'+myArr[0]).play();
+							}, totalwaktu);
+						totalwaktu=totalwaktu+600;
+						setTimeout(function() {
+								document.getElementById('puluh').pause();
+								document.getElementById('puluh').currentTime=0;
+								document.getElementById('puluh').play();
+							}, totalwaktu);
+						totalwaktu=totalwaktu+780;
+					} else {
+					//JIKA ARRAY KE 1=0 MAINKAN SERATUS+ANGKA+PULUH+ANGKA
+						setTimeout(function() {
+							document.getElementById('seratus').pause();
+							document.getElementById('seratus').currentTime=0;
+							document.getElementById('seratus').play();
+						}, totalwaktu);
+						totalwaktu=totalwaktu+780;
+						setTimeout(function() {
+								document.getElementById('suara'+myArr[0]).pause();
+								document.getElementById('suara'+myArr[0]).currentTime=0;
+								document.getElementById('suara'+myArr[0]).play();
+							}, totalwaktu);
+						totalwaktu=totalwaktu+600;
+						setTimeout(function() {
+								document.getElementById('puluh').pause();
+								document.getElementById('puluh').currentTime=0;
+								document.getElementById('puluh').play();
+							}, totalwaktu);
+						totalwaktu=totalwaktu+500;
+						setTimeout(function() {
+								document.getElementById('suara'+myArr[1]).pause();
+								document.getElementById('suara'+myArr[1]).currentTime=0;
+								document.getElementById('suara'+myArr[1]).play();
+							}, totalwaktu);
+						totalwaktu=totalwaktu+500;
+					}
+					
+				}
+
+				//MAINKAN SUARA POLI
+				setTimeout(function() {
+					document.getElementById('suarapoli').pause();
+					document.getElementById('suarapoli').currentTime=0;
+					document.getElementById('suarapoli').play();
+				}, totalwaktu);
+				totalwaktu=totalwaktu+1000; 
+
+				//MAINKAN SUARA POLI YANG MEMANGGIL
+				setTimeout(function() {
+					document.getElementById('suara'+data.pemanggil).pause();
+					document.getElementById('suara'+data.pemanggil).currentTime=0;
+					document.getElementById('suara'+data.pemanggil).play();
+				}, totalwaktu);
+				totalwaktu=totalwaktu+1000;
+
+				//SOUND STOP
+				setTimeout(function() {
+					socket.emit('stop');
+				}, totalwaktu);
+				totalwaktu=totalwaktu+500;
+
+			})
+		})
+	</script>
+</body>
+<!-- Body END -->
+
+</html>
