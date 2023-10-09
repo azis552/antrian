@@ -87,7 +87,7 @@ $(function(){
                                     parent+= '<td>' + element.no_rkm_medis + '</td>';
                                     parent+= '<td>' + element.nm_pasien + '</td>';
                                     parent+= '<td>' + element.nm_poli + '</td>';
-                                    parent+=`<td><button type="button" class="btn btn-info" id='berkas_diterima' data-nomor='`+element.no_rawat+`'><i class="fa fa-book"> Berkas Diterima</i></button></td>`;
+                                    parent+=`<td>UPDATE STATUS DI KHANZA</td>`;
                             }else if(element.stts == 'Berkas Diterima'){
                                 if (element.jmlh == 0 ) {
                                     parent+= '<tr class="alert alert-default" role="alert">';
@@ -96,7 +96,7 @@ $(function(){
                                     parent+= '<td>' + element.nm_pasien + '</td>';
                                     parent+= '<td>' + element.nm_poli + '</td>';
                                     parent+= `<td><button class="btn btn-primary btn-xs" id='panggil' data-nomor='`+element.no_reg+`' data-kode='`+element.kd_poli_bpjs+`' data-poli='`+element.nm_poli+`' data-dokter='`+element.nm_dokter+`'><i class="fa fa-bullhorn"> Panggil</i></button><hr>`;
-                                    parent+=`<button type="button" class="btn btn-info" id="modal-selesai" data-nomor='`+element.no_rawat+`'><i class="fa fa-edit"> SOAP</i></button><hr>`;
+                                    // parent+=`<button type="button" class="btn btn-info" id="modal-selesai" data-nomor='`+element.no_rawat+`'><i class="fa fa-edit"> SOAP</i></button><hr>`;
                                     parent+=`<button type="button" class="btn btn-danger" id='batal' data-nomor='`+element.no_rawat+`' ><i class="fa fa-close"> Batal</i></button></td>`;
                                 } else {
                                     parent+= '<tr class="alert alert-warning" role="alert">';

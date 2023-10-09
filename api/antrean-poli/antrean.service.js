@@ -4,7 +4,7 @@ const pool = require("../../db")
 module.exports = {
 	postSoap: (data, callBack) => {
 		pool.query(
-			`INSERT INTO pemeriksaan_ralan(no_rawat, tgl_perawatan, jam_rawat, suhu_tubuh, tensi, nadi, respirasi, tinggi, berat, spo2, gcs, kesadaran, keluhan, pemeriksaan, alergi, imun_ke, rtl, penilaian, instruksi, evaluasi, nip)
+			`INSERT INTO pemeriksaan_ralan(no_rawat, tgl_perawatan, jam_rawat, suhu_tubuh, tensi, nadi, respirasi, tinggi, berat, spo2, gcs, kesadaran, keluhan, pemeriksaan, alergi, lingkar_perut, rtl, penilaian, instruksi, evaluasi, nip)
 				VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
 			[
 				data.no_rawat,
@@ -22,7 +22,8 @@ module.exports = {
 				data.keluhan,
 				data.pemeriksaan,
 				data.alergi,
-				data.imun_ke,
+				// data.imun_ke,
+				'-',
 				data.rtl,
 				data.penilaian,
 				data.instruksi,

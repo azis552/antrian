@@ -740,6 +740,139 @@
 
         })
         
+
+        socket.on('ulang-kasir', function(data){
+
+            var nm_pasien 	= data.pasien;
+            var nm_poli = data.poli;
+            var nm = nm_pasien;
+            var gelar = nm.substring(0, 2);
+            var explode = nm_pasien.split(".");
+            console.log(explode.length);
+            //MAINKAN SUARA BEL PADA SAAT AWAL
+            document.getElementById('suarabel').pause();
+            document.getElementById('suarabel').currentTime=0;
+            document.getElementById('suarabel').play();
+
+            //SET DELAY UNTUK MEMAINKAN REKAMAN NOMOR URUT		
+            totalwaktu=document.getElementById('suarabel').duration*1000;
+
+            if(explode[0].toLowerCase()=='by'){
+                if(explode[1].toLowerCase()=='ny'){
+                    //MAINKAN SUARA		
+                    setTimeout(function() {
+                        responsiveVoice.speak(
+                            "Panggilan Kepada, Bayi, Nyonya, "+explode[2] + ", pasien poli " + nm_poli + ", ke unit kasir ","Indonesian Male", {pitch: 1,rate: 0.7,volume: 1}
+                        );
+                    }, totalwaktu);
+                }else if(explode[1].toLowerCase()=='tn'){
+                    //MAINKAN SUARA		
+                    setTimeout(function() {
+                        responsiveVoice.speak(
+                            "Panggilan Kepada, Bayi, Tuan, "+explode[2] + ", pasien poli " + nm_poli + ", ke unit kasir ","Indonesian Male", {pitch: 1,rate: 0.7,volume: 1}
+                        );
+                    }, totalwaktu);
+                }else{
+                    if(explode.length<=2){
+                        //MAINKAN SUARA		
+                        setTimeout(function() {
+                                responsiveVoice.speak(
+                                    "Panggilan Kepada, Bayi, "+explode[1] + ", pasien poli " + nm_poli + ", ke unit kasir ","Indonesian Male", {pitch: 1,rate: 0.7,volume: 2}
+                                );
+                        }, totalwaktu);
+                        totalwaktu=totalwaktu+1000;
+                    }else{
+                       //MAINKAN SUARA		
+                        setTimeout(function() {
+                                responsiveVoice.speak(
+                                    "Panggilan Kepada, Bayi, "+explode[1] +','+explode[2] +", pasien poli " + nm_poli + ", ke unit kasir ","Indonesian Male", {pitch: 1,rate: 0.7,volume: 2}
+                                );
+                        }, totalwaktu);
+                        totalwaktu=totalwaktu+1000;
+                    }
+                    
+                }
+            }else if(explode[0].toLowerCase()=='ny'){
+                if(explode.length<=2){
+                    //MAINKAN SUARA		
+                    setTimeout(function() {
+                        responsiveVoice.speak(
+                            "Panggilan Kepada, Nyonya, "+explode[1] + ", pasien poli " + nm_poli + ", ke unit kasir ","Indonesian Male", {pitch: 1,rate: 0.7,volume: 1}
+                        );
+                    }, totalwaktu);
+                }else{
+                    //MAINKAN SUARA		
+                    setTimeout(function() {
+                            responsiveVoice.speak(
+                                "Panggilan Kepada, Nyonya, "+explode[1] +','+explode[2] +", pasien poli " + nm_poli + ", ke unit kasir ","Indonesian Male", {pitch: 1,rate: 0.7,volume: 2}
+                            );
+                    }, totalwaktu);
+                    totalwaktu=totalwaktu+1000;
+                }
+            }else if(explode[0].toLowerCase()=='tn'){
+                if(explode.length<=2){
+                    //MAINKAN SUARA		
+                    setTimeout(function() {
+                        responsiveVoice.speak(
+                            "Panggilan Kepada, Tuan, "+explode[1] + ", pasien poli " + nm_poli + ", ke unit kasir ","Indonesian Male", {pitch: 1,rate: 0.7,volume: 1}
+                        );
+                    }, totalwaktu);
+                }else{
+                    //MAINKAN SUARA		
+                    setTimeout(function() {
+                            responsiveVoice.speak(
+                                "Panggilan Kepada, Tuan, "+explode[1] +','+explode[2] +", pasien poli " + nm_poli + ", ke unit kasir ","Indonesian Male", {pitch: 1,rate: 0.7,volume: 2}
+                            );
+                    }, totalwaktu);
+                    totalwaktu=totalwaktu+1000;
+                }
+            }else if(explode[0].toLowerCase()=='an'){
+                if(explode.length<=2){
+                    //MAINKAN SUARA		
+                    setTimeout(function() {
+                        responsiveVoice.speak(
+                            "Panggilan Kepada, Anak, "+explode[1] + ", pasien poli " + nm_poli + ", ke unit kasir ","Indonesian Male", {pitch: 1,rate: 0.7,volume: 1}
+                        );
+                    }, totalwaktu);
+                }else{
+                    //MAINKAN SUARA		
+                    setTimeout(function() {
+                            responsiveVoice.speak(
+                                "Panggilan Kepada, Anak, "+explode[1] +','+explode[2] +", pasien poli " + nm_poli + ", ke unit kasir ","Indonesian Male", {pitch: 1,rate: 0.7,volume: 2}
+                            );
+                    }, totalwaktu);
+                    totalwaktu=totalwaktu+1000;
+                }
+            }else if(explode[0].toLowerCase()=='sdr'){
+                if(explode.length<=2){
+                    //MAINKAN SUARA		
+                    setTimeout(function() {
+                        responsiveVoice.speak(
+                            "Panggilan Kepada, Saudara, "+explode[1] + ", pasien poli " + nm_poli + ", ke unit kasir ","Indonesian Male", {pitch: 1,rate: 0.7,volume: 1}
+                        );
+                    }, totalwaktu);
+                }else{
+                    //MAINKAN SUARA		
+                    setTimeout(function() {
+                            responsiveVoice.speak(
+                                "Panggilan Kepada, Saudara, "+explode[1] +','+explode[2] +", pasien poli " + nm_poli + ", ke unit kasir ","Indonesian Male", {pitch: 1,rate: 0.7,volume: 2}
+                            );
+                    }, totalwaktu);
+                    totalwaktu=totalwaktu+1000;
+                }
+            }else{
+                //MAINKAN SUARA		
+                setTimeout(function() {
+                        responsiveVoice.speak(
+                            "Panggilan Kepada, "+explode[0] + ", pasien poli " + nm_poli + ", ke unit kasir ","Indonesian Male", {pitch: 1,rate: 0.7,volume: 2}
+                        );
+                }, totalwaktu);
+                totalwaktu=totalwaktu+1000;
+            }
+
+
+        })
+
         socket.on('tes', function(data){
             //MAINKAN SUARA LOKET
             document.getElementById('suaraloket').pause();

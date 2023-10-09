@@ -581,6 +581,29 @@
 
 
 			})
+			socket.on('ulang-kasir', function(data){
+
+				var nm_pasien 	= data.pasien;
+				var nm_poli = data.poli;
+
+				//MAINKAN SUARA BEL PADA SAAT AWAL
+				document.getElementById('suarabel').pause();
+				document.getElementById('suarabel').currentTime=0;
+				document.getElementById('suarabel').play();
+
+				//SET DELAY UNTUK MEMAINKAN REKAMAN NOMOR URUT		
+				totalwaktu=document.getElementById('suarabel').duration*1000;
+
+				//MAINKAN SUARA NOMOR ANTRIAN		
+				setTimeout(function() {
+						responsiveVoice.speak(
+							"Panggilan Kepada, "+nm_pasien + ", pasien poli " + nm_poli + ", ke KASIR ","Indonesian Male", {pitch: 1,rate: 0.8,volume: 2}
+						);
+				}, totalwaktu);
+				totalwaktu=totalwaktu+1000;
+
+
+			})
 		})
 	</script>
 

@@ -6,6 +6,7 @@ const io = require('socket.io')(server, {})
 const antreanRouter = require('./api/antrean/antrean.router')
 const antreanPoliRouter = require('./api/antrean-poli/antrean.router')
 const antreanFarmasiRouter = require('./api/antrean-farmasi/antrean.router')
+const antreanKasirRouter = require('./api/antrean-kasir/antrean.router')
 const path = require('path')
 
 // const apiRouter = require('./routes')
@@ -48,6 +49,10 @@ io.sockets.on('connection', function(socket){
 		io.sockets.emit('ulang-farmasi', {pasien:data.pasien,poli:data.poli})
 	})
 	
+	socket.on('retry-kasir', function(data){
+		console.log(data.pasien+' pasien poli '+data.poli+' ke KASIR')
+		io.sockets.emit('ulang-kasir', {pasien:data.pasien,poli:data.poli})
+	})
 	//Send Message
 	socket.on('try', function(data){
 		// console.log(data.layanan+': antrean nomor '+data.abjad+'-'+data.nomor+' loket '+data.loket)
@@ -65,6 +70,7 @@ io.sockets.on('connection', function(socket){
 app.use('/api/antrean', antreanRouter)
 app.use('/api/antrean-poli', antreanPoliRouter)
 app.use('/api/antrean-farmasi', antreanFarmasiRouter)
+app.use('/api/antrean-kasir', antreanKasirRouter)
 app.use('/assets',express.static(path.join(__dirname,'src')))
 
 // === REDIRECT ==
@@ -109,3 +115,6 @@ app.get('/favicon.ico', (req, res) => {
 	res.sendFile(__dirname + '/pages/admisi/other.html')
 })
 
+app.get('/kasir', (req, res) => {
+	res.sendFile(__dirname + '/pages/kasir/kasir.html')
+})
